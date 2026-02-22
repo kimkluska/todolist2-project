@@ -1,0 +1,27 @@
+.header_div {
+  width: 700px;
+  margin: 50px auto;
+  border: 1px solid #070707;
+  padding: 20px;
+  border-radius: 25px;
+}
+
+.row {
+  left: 320px;
+  top: 70px;
+}
+
+.stats {
+  left: 320px;
+  top: 85px;
+}
+
+ul {
+  left: 300px;
+  top: 110px;
+}
+
+.done {
+  text-decoration: line-through;
+  color: gray;
+}

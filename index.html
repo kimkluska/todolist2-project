@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+  <title>Todo Mini Project</title>  
+</head>
+
+<body>
+  <div class="header_div">
+   <h1>Todo List</h1>
+   
+   <div class="row">
+    <input type="tel" id="textinput" name="phone" placeholder="Type a task...">
+    <button id="addBtn" type="button">Add</button>
+   </div>   
+   <p class="stats">
+    Total: <span id="total">0</span> | 
+    Done: <span id="done">0</span>
+   </p>
+   <ul id="taskList"></ul>
+  </div>
+  <script src="main.js"></script>
+</body>
