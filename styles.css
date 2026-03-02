@@ -1,19 +1,39 @@
-.header_div {
+.container{
+  gap: 50px;
   width: 700px;
   margin: 50px auto;
   border: 1px solid #070707;
-  padding: 20px;
+  padding: 50px 50px 8px 50px;
   border-radius: 25px;
 }
+header{
+  display: flex;
+  gap: 18px;
+  left: 50px;
+}
 
-.row {
-  left: 320px;
-  top: 70px;
+img{
+  width: 60px;
+  height: 60px;
+  border-radius: 6.6px;
+  margin-bottom: 13px;
+}
+
+form {
+  display: flex;
+  gap: 12px;
+}
+
+
+.formWrapper{
+  display: flex;
+  gap: 10px;
 }
 
 .stats {
   left: 320px;
   top: 85px;
+  margin-top: 25px;
 }
 
 ul {
@@ -21,7 +41,11 @@ ul {
   top: 110px;
 }
 
+li{
+  cursor: pointer;
+}
+
 .done {
   text-decoration: line-through;
-  color: gray;
+  color: rgb(91, 223, 91);
 }

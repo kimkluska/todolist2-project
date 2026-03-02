@@ -2,24 +2,33 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="styles.css" />
   <title>Todo Mini Project</title>  
-</head>
+</head> 
 
 <body>
-  <div class="header_div">
-   <h1>Todo List</h1>
-   
-   <div class="row">
-    <input type="tel" id="textinput" name="phone" placeholder="Type a task...">
-    <button id="addBtn" type="button">Add</button>
-   </div>   
+  <div class="container">
+   <header>
+     <h1>Tonic's Todo List</h1>
+     <img src="tonic-computer.jpg" alt="tonicImg"  class="img-responsive">
+   </header>
+   <div class="formWrapper">
+     <form class="form-group" >
+        <label hidden for="textInput">New Task</label>
+        <input type="text" id="textinput" name="textInput" placeholder="Type a task..." required>
+        <button class="btn btn-outline-primary" id="addBtn" type="submit">Add</button>
+     </form>
+     <button class="btn btn-outline-info" id="xmlBtn" type="button">Export to XML</button>
+   </div>
    <p class="stats">
     Total: <span id="total">0</span> | 
     Done: <span id="done">0</span>
    </p>
    <ul id="taskList"></ul>
   </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
   <script src="main.js"></script>
 </body>
