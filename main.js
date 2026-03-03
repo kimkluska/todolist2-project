@@ -152,8 +152,10 @@ async function getGif() {
             throw new Error(`Response status: ${response.status}`);
         }
         const result = await response.json();
-        return result;
-
+        if(result){
+            gif = result.data;
+            renderGif(gif);
+        }
     }
     catch(error){
         console.log(error);
@@ -162,16 +164,13 @@ async function getGif() {
 }
 
 
-function renderGif(res){
-    if(res){
-        gif = res.data;
-        const gifElement = document.createElement("img");
-        gifElement.src = gif.images.original.url;
-        gifElement.alt = gif.title;
-        header.appendChild(gifElement);
-    }
+function renderGif(gif){
+    const gifElement = document.createElement("img");
+    gifElement.src = gif.images.original.url;
+    gifElement.alt = gif.title;
+    header.appendChild(gifElement);
 }
 
-getGif().then(res => renderGif(res));
+getGif();
 window.addEventListener("DOMContentLoaded", loading);
 
