@@ -29,18 +29,19 @@ class Task{
     }
 }
 
-
 let tasks = [];
 let stats = {
     totalCount: 0,
     doneCount: 0,
 }
+
 const addButton = document.getElementById("addBtn");
 const taskList = document.getElementById("taskList");
 const totalCount = document.getElementById("total");
 const doneCount = document.getElementById("done");
 const textInput = document.getElementById("textinput");
 const form = document.querySelector("form");
+const header = document.querySelector("header");
 
 form.addEventListener("keydown", function(event)
 {
@@ -76,15 +77,6 @@ taskList.addEventListener("click", function(event)
         const taskId = taskElement.dataset.id;
         changeDoneStatus(taskId);
         renderStats();
-
-        // if(event.target.classList.contains("done")){
-        //     doneCount.textContent = Number(doneCount.textContent)+ 1;
-        //     stats.doneCount += 1;
-        // }
-        // else{
-        //     doneCount.textContent = Number(doneCount.textContent)- 1;
-        //     stats.doneCount -= 1;
-        // }
     }
     saveChanges();
 });
@@ -98,8 +90,6 @@ function createNewTask(textInputValue, doneValue, id=undefined){
 
 function renderTask(newTask)
 {
-    // const task = new Task(textInputValue, doneValue);
-    // task.addTask(task);
     const li = document.createElement("li");
     const taskText = document.createTextNode(newTask.text);
     li.dataset.id = newTask.id;
@@ -134,29 +124,12 @@ function changeDoneStatus(id){
 
 function saveChanges()
 {
-    // let tasks = [];
-    // const liElements = document.querySelectorAll("#taskList li");
-    // liElements.forEach(li => {
-    //     const task = {
-    //         text: li.textContent,
-    //         done: li.classList.contains("done"),
-    //     };
-    //     tasks.push(task);
-    // });
-    localStorage.setItem("tasksJson", JSON.stringify(tasks));
-
-    // const stats = {
-    //     totalCount: totalCount.textContent,
-    //     doneCount: doneCount.textContent,
-    // }
-    // localStorage.setItem("statsJson", JSON.stringify(stats));
-    
+    localStorage.setItem("tasksJson", JSON.stringify(tasks)); 
 }
 
 function loading()
 {
     const tasksJson = localStorage.getItem("tasksJson");
-    // const statsJson = localStorage.getItem("statsJson");
     if(tasksJson){
         tasks = [];
         const rawTasks = JSON.parse(tasksJson);
@@ -164,20 +137,32 @@ function loading()
         taskList.innerHTML = "";
         renderTodoList();
         renderStats();
-        // tasks.forEach(task => {
-        //     renderTask(task.text, task.done);
-        // });
     }
-    // console.log(statsJson);
-    // if(statsJson){
-    //     stats = JSON.parse(statsJson);
-    //     renderStats();
-    // }
-
-    // totalCount.textContent = stats.totalCount;
-    // doneCount.textContent = stats.doneCount;
 
 }
-console.log(tasks);
-window.addEventListener("DOMContentLoaded", loading);
 
+const key = "mbqZPXgCNseuUso0ISDnEFbooKeHOJzU";
+const gifTag = "cat";
+
+fetch(`https://api.giphy.com/v1/gifs/random?api_key=${key}&tag=${gifTag}`)
+    .then(function(res){
+        return res.json();
+    })
+    .then(function(res){
+        if(res){
+            renderGif(res.data);
+        }
+    })
+    .catch(function(err){
+        console.log(err);
+    });
+
+
+function renderGif(gif){
+    const gifElement = document.createElement("img");
+    gifElement.src = gif.images.original.url;
+    gifElement.alt = gif.title;
+    header.appendChild(gifElement);
+}
+
+window.addEventListener("DOMContentLoaded", loading);
