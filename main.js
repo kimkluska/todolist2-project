@@ -143,26 +143,35 @@ function loading()
 
 const key = "mbqZPXgCNseuUso0ISDnEFbooKeHOJzU";
 const gifTag = "cat";
+const base_url = "https://api.giphy.com/v1/gifs/random"
 
-fetch(`https://api.giphy.com/v1/gifs/random?api_key=${key}&tag=${gifTag}`)
-    .then(function(res){
-        return res.json();
-    })
-    .then(function(res){
-        if(res){
-            renderGif(res.data);
+async function getGif() {
+    try{
+        const response =  await fetch(`${base_url}?api_key=${key}&tag=${gifTag}`);
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
         }
-    })
-    .catch(function(err){
-        console.log(err);
-    });
+        const result = await response.json();
+        return result;
 
+    }
+    catch(error){
+        console.log(error);
+    }
 
-function renderGif(gif){
-    const gifElement = document.createElement("img");
-    gifElement.src = gif.images.original.url;
-    gifElement.alt = gif.title;
-    header.appendChild(gifElement);
 }
 
+
+function renderGif(res){
+    if(res){
+        gif = res.data;
+        const gifElement = document.createElement("img");
+        gifElement.src = gif.images.original.url;
+        gifElement.alt = gif.title;
+        header.appendChild(gifElement);
+    }
+}
+
+getGif().then(res => renderGif(res));
 window.addEventListener("DOMContentLoaded", loading);
+
