@@ -1,3 +1,5 @@
+// // import { json2xml } from "https://cdn.skypack.dev/xml-js";
+// var js2xmlparser = require("js2xmlparser");
 
 const key = "mbqZPXgCNseuUso0ISDnEFbooKeHOJzU";
 const gifTag = "cat";
@@ -10,6 +12,7 @@ let stats = {
 }
 
 const addButton = document.getElementById("addBtn");
+const xmlButton = document.getElementById("xmlBtn");
 const taskList = document.getElementById("taskList");
 const totalCount = document.getElementById("total");
 const doneCount = document.getElementById("done");
@@ -46,6 +49,15 @@ class Task{
         this.done = !this.done;
 
     }
+    convertToXml(){
+        let xml = `<task>\n`;
+        xml += `<text>${this.text}</text>\n`;
+        xml += `<done>${this.done}</done>\n`;
+        xml += `<id>${this.id}</id>\n`;
+        xml += `</task>\n`;
+        return xml;
+
+    }
 }
 
 
@@ -63,7 +75,24 @@ function saveChanges()
 {
     localStorage.setItem("tasksJson", JSON.stringify(tasks)); 
 }
-
+function createXMLString(){
+    let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
+    xml += `<tasks>\n`;
+    tasks.forEach(task => {
+        xml += task.convertToXml();
+    });
+    xml += `</tasks>\n`;
+    console.log(xml);
+    return xml;
+}
+function writeToFile(content, path, contentType){
+    const link = document.createElement("a");
+    const file = new Blob([content], { type: contentType });
+    link.href = URL.createObjectURL(file);
+    link.download = path;
+    link.click();
+    URL.revokeObjectURL(link.href);
+}
 
 function renderTask(newTask)
 {
@@ -96,7 +125,6 @@ function renderGif(gif){
     gifElement.alt = gif.title;
     header.appendChild(gifElement);
 }
-
 
 async function getGif() {
     try{
@@ -150,13 +178,17 @@ form.addEventListener("submit", function(event)
 taskList.addEventListener("click", function(event)
 {  
     if (event.target.tagName === "LI"){
-        taskElement = event.target;
+        const taskElement = event.target;
         taskElement.classList.toggle("done");
         const taskId = taskElement.dataset.id;
         changeDoneStatus(taskId);
         renderStats();
     }
     saveChanges();
+});
+xmlButton.addEventListener("click", function(){
+    const xmlString = createXMLString();
+    writeToFile(xmlString, "tasks.xml", "text/xml");
 });
 form.addEventListener("keydown", function(event)
 {
@@ -169,7 +201,7 @@ form.addEventListener("keydown", function(event)
 
 
 window.addEventListener("DOMContentLoaded", () => {
-    loading();
+    loading();  
     getGif();
 
 });
