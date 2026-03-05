@@ -50,8 +50,9 @@ class Task{
 
     }
     convertToXml(){
+        const newText = escapeXML(this.text);
         let xml = `<task>\n`;
-        xml += `<text>${this.text}</text>\n`;
+        xml += `<text>${newText}</text>\n`;
         xml += `<done>${this.done}</done>\n`;
         xml += `<id>${this.id}</id>\n`;
         xml += `</task>\n`;
@@ -74,6 +75,25 @@ function changeDoneStatus(id){
 function saveChanges()
 {
     localStorage.setItem("tasksJson", JSON.stringify(tasks)); 
+}
+function escapeXML(str){
+    const specialChars = {
+    "<" : "&lt;",
+    ">" : "&gt",
+    "&" : "&amp",
+    "'" : "&apos",
+    '"' : "&quot",
+    }
+    const arr = str.split('');
+    for(let i = 0; i < arr.length; i++){
+        let ch = arr[i];
+        if(ch in specialChars){
+            arr[i] = specialChars[ch] + ";";
+        }
+    
+    }
+    newText = arr.join('');
+    return newText;
 }
 function createXMLString(){
     let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
@@ -165,11 +185,9 @@ form.addEventListener("submit", function(event)
     if(textInput.value.trim() == ""){
         return;
     }
-    totalCount.textContent = Number(totalCount.textContent)+ 1;
-    stats.totalCount += 1;
-
     const newTask = createNewTask(textInput.value, false);
     renderTask(newTask);
+    renderStats();
 
     textInput.value = "";
 
